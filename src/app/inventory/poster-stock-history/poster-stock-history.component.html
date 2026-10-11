@@ -1,0 +1,70 @@
+<section class="ph-panel">
+  <div class="ph-head">
+    <h2 class="ph-title">Stock Update History</h2>
+    <div class="ph-range">
+      <label>
+        From
+        <input type="date" class="form-control form-control-sm" [(ngModel)]="from" [max]="to" (change)="load()" />
+      </label>
+      <label>
+        To
+        <input type="date" class="form-control form-control-sm" [(ngModel)]="to" [min]="from" (change)="load()" />
+      </label>
+    </div>
+  </div>
+
+  <div class="ph-status" *ngIf="loading">Loading history...</div>
+  <div class="alert alert-danger py-2 mb-2" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <ng-container *ngIf="!loading && !errorMessage">
+    <p class="ph-status" *ngIf="!days.length">No stock changes in this period.</p>
+
+    <div class="ph-day" *ngFor="let day of days">
+      <div class="ph-day-head">
+        <span class="ph-day-date">{{ day.date + 'T00:00:00' | date: 'EEEE, d MMM y' }}</span>
+        <span class="ph-day-meta">
+          {{ day.entries.length }} update{{ day.entries.length === 1 ? '' : 's' }}
+          · by {{ day.updaters.join(', ') }}
+          · net
+          <strong [class.ph-up]="day.net > 0" [class.ph-down]="day.net < 0">{{ day.net > 0 ? '+' : '' }}{{ day.net | number }} pcs</strong>
+        </span>
+      </div>
+
+      <div class="table-responsive">
+        <table class="ph-table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Updated By</th>
+              <th>Shape</th>
+              <th>Finish</th>
+              <th>Quality</th>
+              <th class="text-end">Previous</th>
+              <th class="text-end">New</th>
+              <th class="text-end">Change</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entry of day.entries">
+              <td class="ph-nowrap">{{ entry.updatedAt | date: 'h:mm:ss a' }}</td>
+              <td>
+                {{ entry.updatedBy }}
+                <span class="ph-role" *ngIf="entry.updatedByRole">{{ entry.updatedByRole === 'admin' ? 'Admin' : 'Store Manager' }}</span>
+              </td>
+              <td>{{ entry.shape }}</td>
+              <td>{{ entry.finish || '-' }}</td>
+              <td>{{ entry.quality }}</td>
+              <td class="text-end">{{ entry.previousStock | number }}</td>
+              <td class="text-end">{{ entry.newStock | number }}</td>
+              <td class="text-end">
+                <span class="ph-change" [class.ph-up]="entry.change > 0" [class.ph-down]="entry.change < 0">
+                  {{ entry.change > 0 ? '+' : '' }}{{ entry.change | number }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+</section>

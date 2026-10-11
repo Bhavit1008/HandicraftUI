@@ -1,0 +1,22 @@
+<div class="login-page">
+  <form class="login-card" (ngSubmit)="login()">
+    <h1 class="brand">HANDICRAFT INVENTORY</h1>
+    <p class="subtitle">Sign in to continue</p>
+
+    <div class="mb-3">
+      <label class="form-label">Employee Name</label>
+      <input class="form-control" name="employeeName" [(ngModel)]="employeeName" autocomplete="username" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      <input class="form-control" type="password" name="password" [(ngModel)]="password" autocomplete="current-password" />
+    </div>
+
+    <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <button class="btn btn-dark w-100" type="submit" [disabled]="loading">
+      {{ loading ? 'Signing in...' : 'Sign In' }}
+    </button>
+  </form>
+</div>

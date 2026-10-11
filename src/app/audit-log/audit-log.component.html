@@ -1,0 +1,30 @@
+<div class="page">
+  <h2>Audit Log</h2>
+
+  <div *ngIf="loading">Loading...</div>
+
+  <table class="table table-hover" *ngIf="!loading">
+    <thead>
+      <tr>
+        <th>When</th>
+        <th>Summary</th>
+        <th>Performed By</th>
+        <th>Role</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let log of logs">
+        <td>{{ log.timestamp | date:'short' }}</td>
+        <td>{{ log.summary }}</td>
+        <td>{{ log.performedBy }}</td>
+        <td>{{ log.performedByRole }}</td>
+        <td class="text-end">
+          <button class="btn btn-sm btn-outline-danger" (click)="remove(log)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!loading && !logs.length">No audit entries yet.</p>
+</div>
