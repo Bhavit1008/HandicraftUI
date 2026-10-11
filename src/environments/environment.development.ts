@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080',
+  // Use 'http://localhost:8080' when running the backend locally.
+  apiUrl: 'https://handicraftbackend.onrender.com',
   /** Temporary local login used while the backend is unavailable. Development builds only. */
   devLogin: {
     loginId: 'admin',
