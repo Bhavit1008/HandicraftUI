@@ -7,7 +7,8 @@
   <div *ngIf="loading">Loading...</div>
   <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
 
-  <table class="table table-hover" *ngIf="!loading && items.length">
+  <div class="table-responsive" *ngIf="!loading && items.length">
+  <table class="table table-hover align-middle">
     <thead>
       <tr>
         <th>Item Code</th>
@@ -25,13 +26,14 @@
         <td>{{ item.category }}</td>
         <td>{{ item.quantity }}</td>
         <td>{{ item.status }}</td>
-        <td class="text-end">
+        <td class="text-end text-nowrap">
           <a class="btn btn-sm btn-outline-secondary" [routerLink]="['/items', item.id, 'edit']">Edit</a>
           <button class="btn btn-sm btn-outline-danger ms-2" (click)="remove(item)">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
+  </div>
 
   <p *ngIf="!loading && !items.length">No items yet.</p>
 </div>

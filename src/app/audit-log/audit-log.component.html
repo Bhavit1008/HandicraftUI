@@ -3,7 +3,8 @@
 
   <div *ngIf="loading">Loading...</div>
 
-  <table class="table table-hover" *ngIf="!loading">
+  <div class="table-responsive" *ngIf="!loading">
+  <table class="table table-hover align-middle">
     <thead>
       <tr>
         <th>When</th>
@@ -15,7 +16,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let log of logs">
-        <td>{{ log.timestamp | date:'short' }}</td>
+        <td class="text-nowrap">{{ log.timestamp | date:'short' }}</td>
         <td>{{ log.summary }}</td>
         <td>{{ log.performedBy }}</td>
         <td>{{ log.performedByRole }}</td>
@@ -25,6 +26,7 @@
       </tr>
     </tbody>
   </table>
+  </div>
 
   <p *ngIf="!loading && !logs.length">No audit entries yet.</p>
 </div>

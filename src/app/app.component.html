@@ -1,6 +1,20 @@
-<div class="app-shell">
+<div class="app-shell" [class.menu-open]="menuOpen">
 
-  <aside class="side-nav" *ngIf="!isLoginPage">
+  <!-- Mobile/tablet top bar; hidden on desktop -->
+  <header class="top-bar" *ngIf="!isLoginPage">
+    <button type="button" class="menu-btn" (click)="setMenu(true)" aria-label="Open menu"
+            aria-controls="side-nav" [attr.aria-expanded]="menuOpen">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+    <span class="top-brand">HANDICRAFT <small>INVENTORY</small></span>
+    <div class="top-avatar" [title]="currentUser">{{ initials }}</div>
+  </header>
+
+  <div class="nav-backdrop" *ngIf="!isLoginPage && menuOpen" (click)="setMenu(false)"></div>
+
+  <aside id="side-nav" class="side-nav" *ngIf="!isLoginPage" (click)="onNavClick($event)">
     <div class="brand">
       <svg class="brand-logo" width="36" height="36" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 2 3 7l9 5 9-5-9-5Z" fill="#ff7a45" />
@@ -11,6 +25,11 @@
         <span class="brand-mark">HANDICRAFT</span>
         <span class="brand-sub">INVENTORY</span>
       </div>
+      <button type="button" class="nav-close" (click)="setMenu(false)" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg>
+      </button>
     </div>
 
     <nav class="nav-list">

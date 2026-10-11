@@ -7,22 +7,22 @@
   <div class="card p-3 mb-4" *ngIf="showForm">
     <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
     <form (ngSubmit)="save()" class="row g-3">
-      <div class="col-md-3">
+      <div class="col-12 col-sm-6 col-md-3">
         <label class="form-label">Employee Name</label>
         <input class="form-control" name="employeeName" [(ngModel)]="draft.employeeName" />
       </div>
-      <div class="col-md-3">
+      <div class="col-12 col-sm-6 col-md-3">
         <label class="form-label">Password</label>
         <input class="form-control" type="password" name="password" [(ngModel)]="draft.password" />
       </div>
-      <div class="col-md-3">
+      <div class="col-12 col-sm-6 col-md-3">
         <label class="form-label">Role</label>
         <select class="form-select" name="role" [(ngModel)]="draft.role">
           <option value="admin">Admin</option>
           <option value="store_manager">Store Manager</option>
         </select>
       </div>
-      <div class="col-md-3">
+      <div class="col-12 col-sm-6 col-md-3">
         <label class="form-label">Locations (comma-separated)</label>
         <input class="form-control" name="locationsText" [(ngModel)]="locationsText" />
       </div>
@@ -33,7 +33,8 @@
     </form>
   </div>
 
-  <table class="table table-hover">
+  <div class="table-responsive">
+  <table class="table table-hover align-middle">
     <thead>
       <tr>
         <th>Name</th>
@@ -53,4 +54,5 @@
       </tr>
     </tbody>
   </table>
+  </div>
 </div>

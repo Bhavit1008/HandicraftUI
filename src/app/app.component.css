@@ -25,6 +25,10 @@
   border-bottom: 1px solid #2e2e33;
 }
 
+.brand-logo {
+  flex-shrink: 0;
+}
+
 .brand-text {
   display: flex;
   flex-direction: column;
@@ -188,4 +192,142 @@
   min-width: 0;
   background: #f4f5f7;
   overflow-y: auto;
+}
+
+.menu-btn,
+.nav-close {
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 0.4rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile-only pieces, hidden on desktop */
+.top-bar,
+.nav-close,
+.nav-backdrop {
+  display: none;
+}
+
+.menu-btn svg,
+.nav-close svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.menu-btn:hover,
+.nav-close:hover {
+  background: #2d2d32;
+}
+
+/* Phones and tablets: the sidebar becomes a slide-out menu behind a top bar. */
+@media (max-width: 991.98px) {
+  .app-shell {
+    flex-direction: column;
+  }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    height: 56px;
+    padding: 0 0.75rem 0 0.5rem;
+    background: #1c1c1f;
+    color: #fff;
+  }
+
+  .top-brand {
+    flex: 1;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .top-brand small {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #ccc;
+  }
+
+  .top-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #fff;
+    color: #1c1c1f;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .side-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: min(280px, 82vw);
+    z-index: 1040;
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: transform 0.25s ease, visibility 0s linear 0.25s;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .menu-open .side-nav {
+    transform: none;
+    visibility: visible;
+    transition: transform 0.25s ease;
+  }
+
+  .nav-close {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  .nav-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1030;
+    background: rgba(15, 15, 18, 0.5);
+  }
+
+  /* Larger tap targets */
+  .nav-item {
+    padding: 0.75rem;
+  }
+
+  .nav-sub-item {
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+  }
+
+  .main-area {
+    overflow-y: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .side-nav,
+  .menu-open .side-nav {
+    transition: none;
+  }
 }

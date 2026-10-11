@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from './services/auth.service';
@@ -15,6 +15,8 @@ export class AppComponent {
   isLoginPage = true;
   isInventoryRoute = false;
   inventoryOpen = true;
+  /** Slide-out menu state on mobile/tablet; the sidebar is always visible on desktop. */
+  menuOpen = false;
 
   constructor(private router: Router, public auth: AuthService) {
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((e: any) => {
@@ -22,7 +24,24 @@ export class AppComponent {
       this.isLoginPage = url.startsWith('/login');
       this.isInventoryRoute = url.startsWith('/items') || url.startsWith('/inventory');
       if (this.isInventoryRoute) this.inventoryOpen = true;
+      this.setMenu(false);
     });
+  }
+
+  setMenu(open: boolean): void {
+    this.menuOpen = open;
+    // Stop the page behind the open menu from scrolling.
+    document.body.classList.toggle('nav-open', open);
+  }
+
+  /** Close the menu when a link is tapped, including the link for the page already shown. */
+  onNavClick(event: MouseEvent): void {
+    if ((event.target as HTMLElement).closest('a')) this.setMenu(false);
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    if (this.menuOpen) this.setMenu(false);
   }
 
   get isAdmin(): boolean {
@@ -50,6 +69,7 @@ export class AppComponent {
   }
 
   logout(): void {
+    this.setMenu(false);
     this.auth.clearSession();
     this.router.navigate(['/login']);
   }
